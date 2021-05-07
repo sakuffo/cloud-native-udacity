@@ -1,14 +1,12 @@
 from flask import Flask
 from flask import json
 import logging
-import inspect
-from datetime import datetime
 app = Flask(__name__)
 
 
 @app.route("/")
 def hello():
-    app.logger.debug(TimeAndFuncLog())
+    app.logger.info('Main request successful')
     return "Hello World!"
 
 @app.route("/status")
@@ -18,7 +16,7 @@ def healthcheck():
         status=200,
         mimetype='application/json'
     )
-    app.logger.debug(TimeAndFuncLog())
+    app.logger.info('status request successful')
     return response
 
 @app.route("/metrics")
@@ -34,16 +32,9 @@ def metrics():
             }),
         status=200,
         mimetype='application/json')
-    app.logger.debug(TimeAndFuncLog())
+    app.logger.info('metrics request successful')
     return response
 
-def TimeAndFuncLog():
-    now = datetime.now()
-    
-    who = inspect.stack()[1][3]
-    message=f"{now} {who} endpoint was reached"
-    return message
-
 if __name__ == "__main__":
-    logging.basicConfig(filename='app.log', encoding="utf-8", level=logging.DEBUG)
+    logging.basicConfig(filename='app.log', level=logging.DEBUG)
     app.run(host='127.0.0.1')
