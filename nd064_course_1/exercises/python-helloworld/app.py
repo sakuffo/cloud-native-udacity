@@ -38,11 +38,12 @@ def metrics():
     return response
 
 def TimeAndFuncLog():
-    now = datetime.now().strftime("%d-%m-%Y|%H:%M:%S")
+    now = datetime.now()
+    
     who = inspect.stack()[1][3]
     message=f"{now} {who} endpoint was reached"
     return message
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='app.log', encoding='utf-8', level=logging.DEBUG)
-    app.run(host='0.0.0.0')
+    logging.basicConfig(filename='app.log', encoding="utf-8", level=logging.DEBUG)
+    app.run(host='127.0.0.1')
